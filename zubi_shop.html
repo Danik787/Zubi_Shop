@@ -1,0 +1,521 @@
+
+html_code = '''<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Zubi Shop — Online Store</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    body {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Montserrat', sans-serif;
+      position: relative;
+      overflow: hidden;
+      background: #0a0e27;
+    }
+    
+    .bg-gradient {
+      position: absolute;
+      inset: 0;
+      background: 
+        radial-gradient(ellipse at 20% 20%, rgba(255,140,0,0.15) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 80%, rgba(30,58,138,0.2) 0%, transparent 50%),
+        radial-gradient(ellipse at 50% 50%, rgba(255,100,0,0.08) 0%, transparent 70%);
+      animation: bgPulse 8s ease-in-out infinite;
+    }
+    
+    @keyframes bgPulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.8; transform: scale(1.05); }
+    }
+    
+    .particles {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+    }
+    
+    .particle {
+      position: absolute;
+      width: 4px;
+      height: 4px;
+      background: rgba(255,140,0,0.6);
+      border-radius: 50%;
+      animation: floatUp linear infinite;
+    }
+    
+    @keyframes floatUp {
+      0% { transform: translateY(100vh) scale(0); opacity: 0; }
+      10% { opacity: 1; }
+      90% { opacity: 1; }
+      100% { transform: translateY(-10vh) scale(1); opacity: 0; }
+    }
+    
+    .content {
+      position: relative;
+      z-index: 10;
+      text-align: center;
+      padding: 40px 20px;
+      max-width: 480px;
+      width: 100%;
+      animation: fadeInUp 1s ease-out;
+    }
+    
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(40px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .logo-container {
+      margin-bottom: 24px;
+      animation: logoFloat 3s ease-in-out infinite;
+    }
+    
+    @keyframes logoFloat {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-12px); }
+    }
+    
+    .logo-img {
+      width: 160px;
+      height: 160px;
+      border-radius: 24px;
+      object-fit: cover;
+      box-shadow: 
+        0 20px 60px rgba(255,140,0,0.3),
+        0 0 0 4px rgba(255,140,0,0.1);
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+    
+    .logo-img:hover {
+      transform: scale(1.08) rotate(2deg);
+      box-shadow: 
+        0 30px 80px rgba(255,140,0,0.4),
+        0 0 0 6px rgba(255,140,0,0.15);
+    }
+    
+    .title {
+      font-size: 42px;
+      font-weight: 800;
+      color: #fff;
+      letter-spacing: 4px;
+      text-shadow: 0 4px 20px rgba(255,140,0,0.3);
+      margin-bottom: 4px;
+    }
+    
+    .subtitle {
+      font-size: 14px;
+      font-weight: 600;
+      color: rgba(255,255,255,0.5);
+      letter-spacing: 8px;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+    }
+    
+    .divider {
+      width: 60px;
+      height: 3px;
+      background: linear-gradient(90deg, transparent, #ff8c00, transparent);
+      margin: 0 auto 32px;
+      border-radius: 2px;
+      animation: dividerGlow 2s ease-in-out infinite;
+    }
+    
+    @keyframes dividerGlow {
+      0%, 100% { opacity: 0.5; box-shadow: 0 0 10px rgba(255,140,0,0.3); }
+      50% { opacity: 1; box-shadow: 0 0 20px rgba(255,140,0,0.6); }
+    }
+    
+    .buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    
+    .btn {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px 28px;
+      border: none;
+      border-radius: 20px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      position: relative;
+      overflow: hidden;
+      backdrop-filter: blur(10px);
+    }
+    
+    .btn::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(255,255,255,0.1), transparent);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    
+    .btn:hover::before { opacity: 1; }
+    
+    .btn-primary {
+      background: linear-gradient(135deg, #ff8c00, #ff6b00);
+      color: #fff;
+      box-shadow: 0 8px 32px rgba(255,140,0,0.35);
+    }
+    
+    .btn-telegram {
+      background: linear-gradient(135deg, #1e3a8a, #1e40af);
+      color: #fff;
+      box-shadow: 0 8px 32px rgba(30,58,138,0.35);
+    }
+    
+    .btn-social {
+      background: linear-gradient(135deg, #1a1a2e, #16213e);
+      color: #fff;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+      border: 1px solid rgba(255,140,0,0.2);
+    }
+    
+    .btn:hover {
+      transform: translateY(-6px) scale(1.02);
+    }
+    
+    .btn-primary:hover {
+      box-shadow: 0 16px 48px rgba(255,140,0,0.5);
+    }
+    
+    .btn-telegram:hover {
+      box-shadow: 0 16px 48px rgba(30,58,138,0.5);
+    }
+    
+    .btn-social:hover {
+      box-shadow: 0 16px 48px rgba(255,140,0,0.2);
+      border-color: rgba(255,140,0,0.4);
+    }
+    
+    .btn:active {
+      transform: translateY(-2px) scale(0.98);
+      transition: all 0.1s;
+    }
+    
+    .btn-icon {
+      font-size: 28px;
+      margin-bottom: 6px;
+      display: block;
+      transition: transform 0.3s;
+    }
+    
+    .btn:hover .btn-icon {
+      transform: scale(1.2) rotate(-5deg);
+    }
+    
+    .btn-text {
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: 1px;
+    }
+    
+    .btn-desc {
+      font-size: 12px;
+      font-weight: 400;
+      opacity: 0.7;
+      margin-top: 2px;
+    }
+    
+    /* Модалки */
+    .modal {
+      position: fixed;
+      inset: 0;
+      z-index: 1000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    
+    .modal.active { display: flex; }
+    
+    .modal-backdrop {
+      position: absolute;
+      inset: 0;
+      background: rgba(0,0,0,0.7);
+      backdrop-filter: blur(8px);
+      animation: backdropIn 0.3s ease;
+    }
+    
+    @keyframes backdropIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    
+    .modal-content {
+      position: relative;
+      background: linear-gradient(145deg, #1a1a2e, #0f0f23);
+      border-radius: 24px;
+      padding: 36px 32px;
+      max-width: 420px;
+      width: 100%;
+      border: 1px solid rgba(255,140,0,0.15);
+      box-shadow: 0 25px 80px rgba(0,0,0,0.5);
+      animation: modalIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      z-index: 10;
+      color: #fff;
+      text-align: left;
+    }
+    
+    @keyframes modalIn {
+      from { opacity: 0; transform: scale(0.85) translateY(20px); }
+      to { opacity: 1; transform: scale(1) translateY(0); }
+    }
+    
+    .modal-close {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      background: rgba(255,255,255,0.1);
+      border: none;
+      color: #fff;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      cursor: pointer;
+      font-size: 16px;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .modal-close:hover {
+      background: rgba(255,100,100,0.3);
+      transform: rotate(90deg);
+    }
+    
+    .modal-content h2 {
+      font-size: 22px;
+      font-weight: 700;
+      margin-bottom: 16px;
+      color: #ff8c00;
+    }
+    
+    .modal-text {
+      font-size: 14px;
+      line-height: 1.7;
+      color: rgba(255,255,255,0.75);
+      margin-bottom: 20px;
+    }
+    
+    .catalog-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+    }
+    
+    .catalog-item {
+      background: rgba(255,140,0,0.1);
+      border: 1px solid rgba(255,140,0,0.2);
+      border-radius: 12px;
+      padding: 14px;
+      text-align: center;
+      font-size: 13px;
+      font-weight: 600;
+      color: #fff;
+      transition: all 0.3s;
+    }
+    
+    .catalog-item:hover {
+      background: rgba(255,140,0,0.2);
+      transform: translateY(-2px);
+    }
+    
+    .social-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    
+    .social-row {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 16px 18px;
+      border-radius: 16px;
+      transition: all 0.3s;
+      text-decoration: none;
+    }
+    
+    .social-active {
+      background: rgba(30,58,138,0.2);
+      border: 1px solid rgba(30,58,138,0.3);
+      cursor: pointer;
+    }
+    
+    .social-active:hover {
+      background: rgba(30,58,138,0.35);
+      transform: translateX(6px);
+    }
+    
+    .social-empty {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.08);
+      cursor: default;
+      opacity: 0.5;
+    }
+    
+    .social-icon {
+      font-size: 24px;
+      width: 40px;
+      text-align: center;
+    }
+    
+    .social-name {
+      font-weight: 700;
+      font-size: 15px;
+      color: #fff;
+      flex: 1;
+    }
+    
+    .social-link {
+      font-size: 12px;
+      color: rgba(255,255,255,0.5);
+      font-family: monospace;
+    }
+    
+    .social-active .social-link {
+      color: #60a5fa;
+    }
+    
+    @media (max-width: 480px) {
+      .title { font-size: 32px; }
+      .logo-img { width: 130px; height: 130px; }
+      .modal-content { padding: 28px 20px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="bg-gradient"></div>
+  <div class="particles" id="particles"></div>
+  
+  <div class="content">
+    <div class="logo-container">
+      <img src="https://i.imgur.com/ZubiShopLogo.png" alt="Zubi Shop Logo" class="logo-img" />
+    </div>
+    
+    <h1 class="title">ZUBI SHOP</h1>
+    <p class="subtitle">ONLINE STORE</p>
+    <div class="divider"></div>
+    
+    <div class="buttons">
+      <button class="btn btn-primary" onclick="showCatalog()">
+        <span class="btn-icon">🛍️</span>
+        <span class="btn-text">Наш ассортимент</span>
+        <span class="btn-desc">От духов до мотоциклов</span>
+      </button>
+      
+      <a href="https://t.me/Zubi_Shop" target="_blank" class="btn btn-telegram">
+        <span class="btn-icon">✈️</span>
+        <span class="btn-text">Telegram-канал</span>
+        <span class="btn-desc">@Zubi_Shop</span>
+      </a>
+      
+      <button class="btn btn-social" onclick="showSocials()">
+        <span class="btn-icon">🌐</span>
+        <span class="btn-text">Наши соцсети</span>
+        <span class="btn-desc">Все платформы</span>
+      </button>
+    </div>
+  </div>
+  
+  <!-- Модалка каталога -->
+  <div class="modal" id="catalogModal">
+    <div class="modal-backdrop" onclick="closeModal('catalogModal')"></div>
+    <div class="modal-content">
+      <button class="modal-close" onclick="closeModal('catalogModal')">✕</button>
+      <h2>🛍️ Наш ассортимент</h2>
+      <p class="modal-text">В Zubi Shop вы найдёте всё — от элитных духов до мощных мотоциклов. Мы подбираем только лучшие товары по доступным ценам.</p>
+      <div class="catalog-grid">
+        <div class="catalog-item">💎 Парфюмерия</div>
+        <div class="catalog-item">👕 Одежда</div>
+        <div class="catalog-item">📱 Гаджеты</div>
+        <div class="catalog-item">🏍️ Мотоциклы</div>
+        <div class="catalog-item">⌚ Аксессуары</div>
+        <div class="catalog-item">🎁 Подарки</div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Модалка соцсетей -->
+  <div class="modal" id="socialModal">
+    <div class="modal-backdrop" onclick="closeModal('socialModal')"></div>
+    <div class="modal-content">
+      <button class="modal-close" onclick="closeModal('socialModal')">✕</button>
+      <h2>🌐 Наши социальные сети</h2>
+      <div class="social-list">
+        <a href="https://t.me/Zubi_Shop" target="_blank" class="social-row social-active">
+          <span class="social-icon">✈️</span>
+          <span class="social-name">Telegram</span>
+          <span class="social-link">https://t.me/Zubi_Shop</span>
+        </a>
+        <div class="social-row social-empty">
+          <span class="social-icon">🎵</span>
+          <span class="social-name">TikTok</span>
+          <span class="social-link">Скоро...</span>
+        </div>
+        <div class="social-row social-empty">
+          <span class="social-icon">📷</span>
+          <span class="social-name">Instagram</span>
+          <span class="social-link">Скоро...</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Частицы
+    (function() {
+      const container = document.getElementById('particles');
+      for (let i = 0; i < 30; i++) {
+        const p = document.createElement('div');
+        p.className = 'particle';
+        p.style.left = Math.random() * 100 + '%';
+        p.style.animationDuration = (4 + Math.random() * 8) + 's';
+        p.style.animationDelay = Math.random() * 5 + 's';
+        p.style.width = (2 + Math.random() * 4) + 'px';
+        p.style.height = p.style.width;
+        p.style.background = Math.random() > 0.5 ? 'rgba(255,140,0,0.5)' : 'rgba(30,58,138,0.5)';
+        container.appendChild(p);
+      }
+    })();
+    
+    function showCatalog() {
+      document.getElementById('catalogModal').classList.add('active');
+    }
+    
+    function showSocials() {
+      document.getElementById('socialModal').classList.add('active');
+    }
+    
+    function closeModal(id) {
+      document.getElementById(id).classList.remove('active');
+    }
+    
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        document.querySelectorAll('.modal').forEach(m => m.classList.remove('active'));
+      }
+    });
+  </script>
+</body>
+</html>'''
+
+with open('/mnt/agents/output/zubi_shop.html', 'w', encoding='utf-8') as f:
+    f.write(html_code)
+
+print("Файл сохранён!")
